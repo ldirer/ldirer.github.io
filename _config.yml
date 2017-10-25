@@ -74,7 +74,7 @@ analytics:
   google:
     tracking_id          :
 
-theme: minimal-mistakes-jekyll
+theme: #jekyll-theme-minimal
 
 # Site Author
 author:

@@ -11,7 +11,7 @@ function techno_to_logo(technologyName) {
 function renderTechnology(t) {
   return `
 <div style="display: inline-block; position:relative">
-<img src="/assets/${techno_to_logo(t)}" width="26px" height="26px" class="with-tooltip"/>
+<img src="/assets/ld/${techno_to_logo(t)}" width="26px" height="26px" class="with-tooltip"/>
 <span class="tooltip">${t}</span>
 </div>
 `
@@ -59,7 +59,7 @@ function renderProject(p) {
 let store = {
   projects: [{
     company: "SkillCorner",
-    logo: "/assets/skillcorner.jpg",
+    logo: "/assets/ld/skillcorner.jpg",
     website: "skillcorner.com",
     body: `<ul>
 <li>helped build the startup's first product, a live game display of football players positions on the pitch.</li>
@@ -72,7 +72,7 @@ let store = {
   },
     {
       company: "Gorgias",
-      logo: "/assets/gorgias.png",
+      logo: "/assets/ld/gorgias.png",
       website: "https://gorgias.io/",
       body: `
       <ul>
@@ -101,7 +101,6 @@ function render() {
 
   let html = "";
   for (let p of store.projects) {
-    console.log('p', p)
     html += renderProject(p)
   }
 
@@ -109,10 +108,7 @@ function render() {
 }
 
 
-console.log('in main')
 window.onload = () => {
-  console.log('in onload')
   let container = document.getElementById('projects')
-  // console.log('render()', render())
   container.innerHTML = render()
 }

@@ -27,6 +27,11 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Another theme
-gem "minimal-mistakes-jekyll"
+# I wanted to use this one but it's not supported by github pages so it's a mess. I'd have to copy it all in my repo.
+# I copied it all.
+#gem "minimal-mistakes-jekyll"
+
+# This one seems to suck.
+#gem "minimal"
 
 
