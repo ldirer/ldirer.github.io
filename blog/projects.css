@@ -1,0 +1,53 @@
+
+.tooltip {
+    background-color: black;
+    color: antiquewhite;
+    font-size: smaller;
+}
+
+.tooltip {
+    position: absolute;
+    display: none;
+}
+
+
+.with-tooltip:hover+.tooltip {
+    position: absolute;
+    top: -20px;
+    left: 0;
+
+    display: inline-block;
+    z-index: 100;
+}
+
+/* We override some of the global theme css */
+.ld-projects {
+    font-family: Lato,Helvetica Neue,Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    line-height: 1.4285em;
+    color: black;
+
+    /* centered column-like layout */
+    max-width: 700px;
+    margin: 30px auto auto;
+}
+
+.ld-projects ul li {
+    margin: 0;
+}
+
+.ld-project {
+    margin-bottom: 45px;
+}
+
+
+.ld-company-header {
+    display: flex;
+    flex-direction: row;
+    /*justify-content: space-between;*/
+    align-items: center;
+}
+
+.ld-gutter {
+    margin-left: 45px;
+}

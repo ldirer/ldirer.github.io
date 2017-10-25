@@ -1,0 +1,24 @@
+.ld-page {
+    padding-top: 25px;
+
+}
+
+.ld-header-me {
+    font-size: 40px;
+    color: dimgrey;
+    text-align: center;
+    margin: 15px auto 15px auto;
+}
+
+.ld-navbar {
+    color: black;
+    text-align: center;
+}
+
+.ld-navbar a {
+    color: #5f6e7d;
+    text-decoration: none;  /* dont underline links */
+    text-transform: uppercase;
+    font-size: smaller;
+    margin: auto 10px auto 10px;
+}

@@ -11,7 +11,7 @@ function techno_to_logo(technologyName) {
 function renderTechnology(t) {
   return `
 <div style="display: inline-block; position:relative">
-<img src="assets/${techno_to_logo(t)}" width="26px" height="26px" class="with-tooltip"/>
+<img src="/assets/${techno_to_logo(t)}" width="26px" height="26px" class="with-tooltip"/>
 <span class="tooltip">${t}</span>
 </div>
 `
@@ -22,33 +22,45 @@ function renderProject(p) {
   let technologiesRendered = p.technologies.map(renderTechnology).reduce((a, b) => a + b, '')
 
   return `
-<div style="display: flex; flex-direction: row; justify-content: space-between;">
+<div class="ld-project" style="display: flex; flex-direction: column; justify-content: space-between;">
 
   <space style="flex: 1 0 auto"></space>
-
-  <div style="flex: 1 0 auto">
-    <img src="${p.logo}" width="200px"/>
+  
+  <div class="ld-company-header">
+    <div> 
+      <img src="${p.logo}" width="200px"/>
+    </div>
+    <div style="flex: 1 0 auto">
+      <div style="display: flex"></div>
+      <p style="margin-left: 10px; margin-bottom: 0; font-weight: bold">${p.company}</p>
+      <a style="margin-left: 10px;" href="${p.website}">${p.website}</a>
+    </div>
   </div>
+  
 
   <div style="flex: 1 0 auto">
-    <p style="margin-bottom: 0; font-weight: bold">${p.company}</p>
-    <a href="${p.website}">${p.website}</a>
     
     ${p.body}
     
   </div>
   <space style="flex: 1 0 auto"></space>
+  
+  <div>
+ ${technologiesRendered} 
+</div>
+
 
 </div>
 
-${technologiesRendered}
 `
 }
 
 
 let store = {
   projects: [{
-    company: "SkillCorner", logo: "assets/skillcorner.jpg", website: "skillcorner.com",
+    company: "SkillCorner",
+    logo: "/assets/skillcorner.jpg",
+    website: "skillcorner.com",
     body: `<ul>
 <li>helped build the startup's first product, a live game display of football players positions on the pitch.</li>
 <li>set up coding practices: add tests, continuous integration, systematic code reviews.</li>
@@ -60,7 +72,7 @@ let store = {
   },
     {
       company: "Gorgias",
-      logo: "assets/gorgias.png",
+      logo: "/assets/gorgias.png",
       website: "https://gorgias.io/",
       body: `
       <ul>

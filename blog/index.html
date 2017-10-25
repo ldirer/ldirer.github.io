@@ -1,12 +1,22 @@
 ---
-layout: default
+layout: mydefault
 ---
 
-<h3>Some projects I have worked on:</h3>
-<div id="projects">
+<div class="ld-about">
+I’m a freelance software engineer helping early-stage tech startups CTOs build their product and team.
+
+  <ul>
+    <li>github: <a href="https://github.com/ldirer">https://github.com/ldirer</a></li>
+    <li>linkedin: <a href="https://www.linkedin.com/in/direr/">https://www.linkedin.com/in/direr/</a></li>
+    <li>email: <span id="ld-email"></span></li>
+</ul>
 </div>
 
-<link rel="stylesheet" href="main.css">
-<script src="main.js"></script>
+
+<script type="application/javascript">
+  // Only bots who load js are worthy of my email
+  let email = document.getElementById('ld-email')
+  email.innerText = 'laurent.direr@gmail.com'
+</script>
 
 

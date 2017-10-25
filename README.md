@@ -1,12 +1,9 @@
-# ldirer.github.io
+# Personal website
 
-I'm a freelance web developer helping early-stage tech startups CTOs build their product and team.
+From the `blog` directory:
 
-
-```python3
-def hello_world():
-    print('Hello world!')
-```
-
-
-Technologies used: python, rabbitmq
+    bundle exec jekyll serve
+    
+Lame: no hot-reload. Takes a while to see changes.
+Maybe I should have rolled my own blog... 
+Though the no-db thing is convenient with github pages and it might be useful in the future.

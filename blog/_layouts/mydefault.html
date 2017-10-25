@@ -1,19 +1,33 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 
   {% include head.html %}
+  <link rel="stylesheet" href="../ld-default.css">
+  <link rel="stylesheet" href="../ld-about.css">
+  <link rel="stylesheet" href="../projects.css">
 
   <body>
 
-    {% include header.html %}
+    <main class="ld-page" aria-label="Content">
 
-    <main class="page-content" aria-label="Content">
-      <div class="wrapper">
-        {{ content }}
+      <div class="ld-header-me">LAURENT DIRER</div>
+      <div class="ld-navbar">
+        <a href="/">About</a>
+        <a href="/work">Previous projects</a>
+        <a href="/blog">Blog</a>
+      </div>
+
+      <div style="display: flex">
+        <div class="ld-gutter"></div>
+        <div class="wrapper">
+          {{ content }}
+        </div>
+        <div class="ld-gutter"></div>
       </div>
     </main>
 
-    {% include footer.html %}
+    <!-- Lame feed button + copyright-->
+    <!--{% include footer.html %}-->
 
   </body>
 
