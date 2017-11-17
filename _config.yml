@@ -70,17 +70,17 @@ social:
 
 # Analytics
 analytics:
-  provider               : false # false (default), "google", "google-universal", "custom"
+  provider               : google # false (default), "google", "google-universal", "custom"
   google:
-    tracking_id          :
+    tracking_id          : UA-84106986-2
 
 theme: #jekyll-theme-minimal
 
 # Site Author
 author:
-  name             : "Your Name"
+  name             : "Laurent Direr"
   avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an amazing person."
+  bio              : "Freelance web developer."
   location         : "Somewhere"
   email            :
   uri              :

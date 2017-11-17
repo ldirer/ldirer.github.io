@@ -28,7 +28,8 @@ function renderProject(p) {
   
   <div class="ld-company-header">
     <div> 
-      <img src="${p.logo}" width="200px"/>
+      <img src="${p.logo}" style="max-width: 200px" /> 
+      <!--width="200px"/>-->
     </div>
     <div style="flex: 1 0 auto">
       <div style="display: flex"></div>
@@ -57,12 +58,25 @@ function renderProject(p) {
 
 
 let store = {
-  projects: [{
+  projects: [
+
+    {
+      company: "Personal project",
+      logo: "/assets/ld/onefeed.png",
+      website: "http://onefeed.cc",
+      body: `A single-page app to aggregate feeds from facebook pages and groups.
+      Feel free to try it out!
+      <div>Deployed on aws.</div>
+      `,
+      technologies: ["python", "flask", "javascript", "vuejs", "bulma", "celery", "docker", "postgresql"]
+    },
+    {
     company: "SkillCorner",
     logo: "/assets/ld/skillcorner.jpg",
-    website: "skillcorner.com",
-    body: `<ul>
-<li>helped build the startup's first product, a live game display of football players positions on the pitch.</li>
+    website: "http://skillcorner.com",
+    body: `
+I helped build the startup's first product, a live game display of football players positions on the pitch.
+<ul>
 <li>set up coding practices: add tests, continuous integration, systematic code reviews.</li>
 <li>made the video processing steps run in parallel to improve fps throughput.</li>
 <li>migrate the app from angular2 beta to stable version, move from gulp to angular-cli.</li>
@@ -87,12 +101,8 @@ let store = {
       </ul>
 `,
       technologies: ["python", "flask", "reactjs", "javascript", "docker", "celery", "rabbitmq", "postgresql"]
-
     }
-
-
   ]
-
 
 }
 
