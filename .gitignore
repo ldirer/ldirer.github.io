@@ -1,6 +1,7 @@
 .idea/
 _site
 .sass-cache
+# This helps Jekyll keep track of file modifications.
 .jekyll-metadata
 
 /vendor
