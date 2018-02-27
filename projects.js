@@ -31,8 +31,7 @@ function renderProject(p) {
       <img src="${p.logo}" style="max-width: 200px" /> 
       <!--width="200px"/>-->
     </div>
-    <div style="flex: 1 0 auto">
-      <div style="display: flex"></div>
+    <div class="ld-company-header-name-link" >
       <p style="margin-left: 10px; margin-bottom: 0; font-weight: bold">${p.company}</p>
       <a style="margin-left: 10px;" href="${p.website}">${p.website}</a>
     </div>

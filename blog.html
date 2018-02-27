@@ -9,10 +9,18 @@ permalink: /blog/
 
 
 <div style="margin: 30px auto auto; max-width: 700px">
+  {% comment %}
+
+  <!--{{ site.posts | json }}-->
+  <!--{% assign posts = site.posts | where:"yes", post.is_annex %}-->
+  {% endcomment %}
+
 
   {% for post in site.posts %}
+  {% if post.is_annex != true %}
   <div>
       <a href="{{ post.url }}">{{ post.title }}</a>
     </div>
+  {% endif %}
   {% endfor %}
 </div>

@@ -26,6 +26,7 @@
     font-size: 14px;
     line-height: 1.4285em;
     color: black;
+    overflow: auto;
 
     /* centered column-like layout */
     max-width: 700px;
@@ -48,6 +49,40 @@
     align-items: center;
 }
 
+/* skillcorner and the link skillcorner.com */
+.ld-company-header-name-link {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    align-items: left;
+}
+
 .ld-gutter {
     margin-left: 45px;
+}
+
+@media screen and (max-width: 600px) {
+    .ld-gutter {
+        margin-left: 15px;
+    }
+
+    .ld-projects {
+        /* 100% minus the 2 ld-gutter margins*/
+        /* We can only specify one max-width so I do this only on small devices. */
+        /* Because we also want to take 100% width when we can! */
+        max-width: calc(100% - 30px);
+    }
+
+    .ld-company-header {
+        display: flex;
+        flex-direction: column;
+        /*justify-content: space-between;*/
+        align-items: left;
+    }
+    .ld-company-header-name-link {
+        display: flex;
+        flex-direction: row;
+        /* flex-end is really bottom here */
+        align-items: flex-end;
+    }
 }

@@ -76,3 +76,12 @@ html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
+
+// Overriding the padding value (200px is ok, when I widen the screen it goes to 300px which makes it smaller (!!).
+// Probably because I'm putting this all in my custom layout though.
+@media (min-width: 80em) {
+  .page {
+    width: calc(100% - 250px);
+    padding-right: 250px
+  }
+}
