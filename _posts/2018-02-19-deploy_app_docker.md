@@ -28,11 +28,11 @@ If you are not very comfortable with the basic docker concepts or are not sure w
 
 # Overview
 
-We will develop a simple application with a Python Flask backend, a Postgresql database and a Vuejs frontend. 
+We will develop a simple application with a Python Flask backend, a Postgresql database and a Vuejs frontend.   
 <!-- We will start by looking at each part individually, then see how we can connect them together.   -->
 All our code will run in containers but most of the time you should be able to forget that your code is not running locally.    
 
-You can follow along by creating an empty directory or using the [code on github](https://github.com/ldirer/deploy-app-docker/tree/working-app-dev-setup).
+You can follow along by creating an empty directory or using the [code on github](https://github.com/ldirer/deploy-app-docker/tree/working-app-dev-setup)[^0].  
 
 As a preview here's what we will get to at the end of this post:
 
@@ -78,7 +78,7 @@ By the end of this post you should have some understanding of every line in this
 For now you can notice we have 3 sections under `services`, namely `front`, `web` and `db`.  
 Our application will run in three containers (based on three images) that communicate with each other: our javascript development server, our Flask application and our database.  
 
-Now we're going to start from scratch and detail everything we need for this to actually run.  
+Now we're going to start from an empty directory and detail everything we need for this to actually run.  
 
 <!-- We specify how our images should be build (`image`, `build`), we use `volumes` to mount folders from our machine into the containers and `ports` so that the processes running on the containers can be accessed on localhost.-->
 
@@ -643,6 +643,7 @@ Then you can create a file `touch myfile`. If you exit the container it will be 
 -->
 
 
+[^0]: There's more in the repository than what we do in this blog post. Run `git clone` then `git checkout tags/dev-setup-blog` to get just what we do in this post. `git checkout tags/working-app-dev-setup` will give you the same setup applied with a simple programming quiz application.
 [^1]: There's a bit more to it than that, `docker-compose` also lets our containers talk to each other as we will see later on.   
 [^2]: We are doing this so that we don't have to worry about installing node and npm, or different versions between developers.
 [^3]: You could also run `docker-compose down frontend` and `docker-compose up frontend` to restart just this service.
