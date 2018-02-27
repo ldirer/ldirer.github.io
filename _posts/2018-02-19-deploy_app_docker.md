@@ -24,25 +24,99 @@ Requirements:
 * You should be comfortable running commands in your terminal.
 <!-- * TODO: Fill that with feedback from The People. -->
 
+If you are not very comfortable with the basic docker concepts or are not sure why you should use it, I wrote [this extra section](/deploy-docker-app/annex-docker).   
+
 # Overview
 
 We will develop a simple application with a Python Flask backend, a Postgresql database and a Vuejs frontend. 
-We will start by looking at each part individually, then see how we can connect them together.
+<!-- We will start by looking at each part individually, then see how we can connect them together.   -->
+All our code will run in containers but most of the time you should be able to forget that your code is not running locally.    
 
-All our code will run in containers. Most of the time you should be able to forget that your code is running in a container and not locally.    
+You can follow along by creating an empty directory or using the [code on github](https://github.com/ldirer/deploy-app-docker/tree/working-app-dev-setup).
 
-The objective is simple: have a development setup that is roughly as efficient (or more) than installing everything on your machine.
+As a preview here's what we will get to at the end of this post:
 
-This environment will be **easily shareable** with your potential teammates and we will be able to reuse some of our work to **make deploying our application much easier**.
+<p class="ld-code-filename"><code>docker-compose.yml</code></p>
+
+```yaml
+version: '3'
+services:
+    front:
+      image: docker-tutorial/front
+      build:
+        context: ./
+        dockerfile: front.dockerfile
+      command: npm run dev
+      volumes:
+        - ./client:/app
+      ports:
+        - "8080:8080"
+    web:
+      image: docker-tutorial/web
+      command: python manage.py runserver
+      build:
+        context: ./
+        dockerfile: web.dockerfile
+      ports:
+        - "5000:5000"
+      volumes:
+        - ./:/app
+      depends_on:
+        - db
+    db:
+      image: postgres:10.2-alpine
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+      ports:
+        - "5432:5432"
+```
+            
+This file specifies how to build the docker images required for our project and how to run them.   
+By the end of this post you should have some understanding of every line in this file.   
+
+For now you can notice we have 3 sections under `services`, namely `front`, `web` and `db`.  
+Our application will run in three containers (based on three images) that communicate with each other: our javascript development server, our Flask application and our database.  
+
+Now we're going to start from scratch and detail everything we need for this to actually run.  
+
+<!-- We specify how our images should be build (`image`, `build`), we use `volumes` to mount folders from our machine into the containers and `ports` so that the processes running on the containers can be accessed on localhost.-->
 
 <!--
-When working on your machine you typically have to deal with:
+The `db` service is the simplest. Let's look at it before we dive into the rest.
 
-* Setting up the database(s) and tooling (could mean installing/upgrading postgres, redis, rabbitmq...)
-* Installing libraries for your backend (if using Python, probably in a virtual environment to avoid conflicts with other projects)
+```yaml
+    db:
+      image: postgres:10.2-alpine
+```
+This says we want to run a container based on an official image directly from dockerhub.
+ 
+ ```yaml
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+```
+            
+This says we want these environment variables set in our container. 
+As specified in the official [image docs](https://hub.docker.com/_/postgres/), it will create a postgres user with the given password.
 
-Once you're setup things usually run smoothly if you are a solo developer. 
-Then you want to deploy your app and you basically have to start from scratch on a remote server (possibly a different operating system), with all the risks and difficulties involved.
+Finally we bind the port 5432 (postgres default) on the container to a port on our machine.
+
+```yaml
+      ports:
+        - "5432:5432"
+```
+            
+After running `docker-compose up db` we can connect to our PostgreSQL server with:
+
+    psql --host localhost -U postgres
+
+<div class="ld-tech-details">
+We are connecting to localhost on the default 5432 port. 
+Since this port is bound to the container 5432 port, we end up connecting to our container.
+</div>
+
+That's it for the database! 
 -->
 
 # Backend
@@ -99,6 +173,9 @@ This is as simple as a dockerfile gets. If you're not familiar with it here's wh
 * Copy (`ADD`) our requirements file and install all libraries (only Flask but there could be more!).
 * Copy all our code into the image.
 * Specify a default command to run when launching a container: here we launch our flask application.
+
+See how we copy the code into the image. One implication of this is that when deploying, we will not need to `git clone` our entire repository.  
+It is sufficient to run `docker-compose pull` to get the relevant images (that contain our code!) from whatever docker registry where we stored them.
 {% endcapture %}
 {{ text | markdownify }}
 </div>
@@ -111,8 +188,8 @@ To build the image from this dockerfile we run the following command:
 <div class="ld-tech-details">
 {% capture text %}
 `-f` specifies the dockerfile to use, `-t` what tag (think name) to give to the image and the last argument is *the build context*.   
-The build context is basically the set of files that is passed to docker when building. 
-You can think about it as the 'current host directory' in the dockerfile.
+The build context is basically the set of files that is passed to docker when building.   
+It also defines the 'current host directory' in the dockerfile.
 
     # Here docker is copying {BUILD_CONTEXT_DIRECTORY}/requirements.txt to the image.
     ADD requirements.txt /some-directory-on-the-image
@@ -184,8 +261,7 @@ This is because the volume is only for development purposes and we will want to 
 
 # Adding a database
 
-A web app usually requires a database. 
-I feel it's actually easier to setup your database using docker than to install it on your machine (beit postgres, mongo or whatever you pick).
+A web app usually requires a database. Here we go:
 
     docker run --rm --name db -p 5432:5432 postgres:10.2
 
@@ -198,12 +274,17 @@ We name our container so we can reference it in docker commands later on if requ
 {{ text | markdownify }}
 </div>
 
-That's it. Now we have a postgres server running in the container and bound to our host port 5432.   
-In this tutorial we won't detail the code that talks with the database as this is Python-specific and unrelated to docker. 
-<!-- TODO: WELL MOSTLY >> POSTGRES URL?  
-TODO: github example should contain code that does that.
--->
+That's it. Now we have a postgres server running in the container and bound to our host port 5432. 
+This means we can run:
 
+    psql --host localhost -U postgres
+
+<div class="ld-tech-details">
+We are connecting to localhost on the default 5432 port. 
+Since this port is bound to the container 5432 port, we end up connecting to our container.
+</div>
+
+In this tutorial we won't detail the code that talks with the database (as this is Python-related) but [the code on github](https://github.com/ldirer/deploy-app-docker/tree/working-app-dev-setup) does this. 
 
 We could run our docker commands one at a time every time we want to run our app, but it is a bit tedious when these commands get long or we add more containers.  
 
@@ -283,7 +364,7 @@ This means we don't have to install `npm` on our host machine and everybody in o
     
 Let's create our `front.dockerfile`:
 
-```
+```dockerfile
 FROM node:9.5
 
 # Specify the version so builds are (more) reproducible.
@@ -316,7 +397,6 @@ Basically we use it only to get `npm`. All the packages will be installed on the
 Thanks to the volume everything will happen as if we had installed them locally [^2].   
 
 
-
 Now we will use `vue-cli` to bootstrap our client code. We need to run this in our container since this is where `vue-cli` is installed.
 
     # This will give us boilerplate code for a Vue application with a full-blown build process.
@@ -346,19 +426,20 @@ We can now run:
 <div class="ld-tech-details">
 {% capture text %}
 The `--service-ports` flag makes sure that ports are bound as specified in the `docker-compose.yml` file.  
-This is not the default for `docker-compose run` (as opposed to `docker-compose up`), probably so you can `run` stuff 
-even when you are running `up` without getting a port conflict. 
+This is not the default for `docker-compose run` (as opposed to `docker-compose up`), which lets you `run` a command in a new container 
+even when another container is `up` (for the same service) without getting a port conflict. 
 {% endcapture %}
 
 {{ text | markdownify }}
 </div>
-<!-- TODO: That's really just a random guess.  -->
-
+<!-- TODO: That's really just a random guess (the why service-ports not default).  -->
 
     
 This should launch a server running on `localhost:8080` on the container. However this is not enough so we can access it from the host!
-Same thing as with the backend, we need to serve on `0.0.0.0:80` in the container. We can change the webpack config to do this.  
-In `client/config/index.js` under the dev section change `host: 'localhost'` to `host: '0.0.0.0'`.
+Same thing as with the backend, we need to serve on `0.0.0.0:8080` in the container. We can change the webpack config to do this.  
+In `client/config/index.js` under the dev section change `host: 'localhost'` to `host: '0.0.0.0'`.  
+You will need to restart the `webpack-dev-server` (running in the front container) as it does not pick up changes in the webpack config on its own.  
+The easiest way is to restart the entire front container with `docker-compose restart front`.
 
 <div class="ld-tech-details">
 {% capture text %}
@@ -442,9 +523,8 @@ Note hot-reloading does not work for webpack config files so you need to stop an
 
 From `http://localhost:8080` we will make a request to `http://localhost:8080/api` instead of `http://localhost:5000/api` and it is `webpack-dev-server` that will transmit it to the backend.  
 In this process our webpack development server will change the origin header so our request is accepted. 
-<!-- TODO: I don't really understand why webpack is able to do this. Ask zulip! -->
 
-Now why are we using `web:5000` and not `localhost:5000`?  
+Now why are we using `web:5000` and not `localhost:5000` [^4]?  
 
 Remember it will be `webpack-dev-server` relaying the request to our web container: the request won't originate from your host but from the frontend container.  
 That means if you use `target: 'http://localhost:5000'`, requests will be made to the port 5000 on the frontend container, and there's nothing there!
@@ -455,7 +535,6 @@ This is `docker-compose` magic: **it created a docker network with all our conta
 Our containers can talk to each other using the service names as addresses.
 <!-- TODO: that's important. Highlight somehow? Mb also check wording is *precise*.
 TODO: mention this is 12-factor stuff? See jerome Petazonni smt talk. -->
-
 
 You can test this configuration by adding this bit of JS to your `client/index.html` file:
 
@@ -480,7 +559,8 @@ If you open your browser with the devtools and refresh the page, you should see 
 
 <div class="ld-tech-details">
 {% capture text %}
-Here are some other ways of fixing CORS. I consider both to be lesser solutions in 2018, I don't know of any advantage they provide over proxying:
+As a small optional read, here are some other ways of fixing CORS. 
+I consider both to be lesser solutions in 2018, I don't know of any advantage they provide over proxying:
 
 1. You could change your backend code to *allow cross origin requests*. This should **never happen in production**.  
 In Flask you could use the `flask-cors` extension to achieve that with minimal overhead.  
@@ -492,7 +572,6 @@ With this setup you access your app on `http://localhost:5000`. The CORS restric
 </div>
 
 
-
 # Tips for developing with docker-compose
 
 Though this setup is a good start, you will have to learn about docker along the way. This can usually be done progressively though.  
@@ -501,9 +580,10 @@ Here are some tips for day-to-day work:
 * `docker-compose up` does not play well with standard input: that means you can't use `pdb` if you start your backend server with docker-compose up.
 
 I usually `docker-compose up front db ... [-d]` to launch all the containers but my backend server.  
+I use the daemon flag (`-d`) when I don't need to see the logs (you can always `docker-compose logs front db` later).  
 Then I do `docker-compose run --rm --name web --service-ports web` as this works with `pdb`.
 
-* It's nice to explicitly name your containers when using `docker-compose run`, as it makes it easier to run ad-hoc docker commands you might need.  
+* It's nice to explicitly name your containers when using `docker-compose run`, as it makes it easier to run ad-hoc docker (non-compose!) commands you might need.  
 Otherwise you need to lookup the random-generated name that docker gave your container.
 
 * Sometimes you need/want to go look on your container what the hell is going on.
@@ -516,6 +596,16 @@ Otherwise you need to lookup the random-generated name that docker gave your con
     
     `-it` makes sure you get a terminal prompt so you can explore things. Otherwise docker just runs bash and exits.
     (`--tty`: give me a prompt! ;`--interactive`: keep stdin attached so I can use that prompt!)
+    
+    
+<!--
+TODO: moar gotchas so I can add this?
+**Common gotchas**:
+
+* A lot of people struggle with the networking side of things. 
+Running a server on `localhost` within a container and trying to access it from the host machine (you can't do that).  
+-->
+
     
 # Conclusion and next steps
 
@@ -540,7 +630,22 @@ The goal of the next tutorial will be to get a production setup that:
 * Includes logging, restart policies and other niceties.
 * Makes you feel good if you've ever struggled with a deployment process.
 
+
+<!-- That's why all packages installations are done in the dockerfile, so they are installed in the image during `docker build`. -->
+
+<!--
+* Say you have a running `web` container. You open a bash shell into it with `docker exec -it web bash`.  
+You install packages, create files. Then you exit and at some point you stop your container and remove it (`docker stop web | xargs docker rm` for a one-liner).
+Then your container is gone, and so are your packages and files. 
+ 
+ You can `docker run --rm -it ubuntu:16.04 bash` to launch a new container based on the official `ubuntu:16.04` image from dockerhub. 
+Then you can create a file `touch myfile`. If you exit the container it will be removed automatically (because of the `--rm` flag). 
+-->
+
+
 [^1]: There's a bit more to it than that, `docker-compose` also lets our containers talk to each other as we will see later on.   
 [^2]: We are doing this so that we don't have to worry about installing node and npm, or different versions between developers.
 [^3]: You could also run `docker-compose down frontend` and `docker-compose up frontend` to restart just this service.
+[^4]: This is really key to understand. How would we do it if we were running the webpack server locally (not using docker for the frontend)? What address would we use?
+
 
