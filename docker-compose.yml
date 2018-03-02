@@ -5,6 +5,21 @@ services:
     build:
       dockerfile: nginx.dockerfile
       context: ./deploy
+    # This makes sure that our logging file does not grow indefinitely (until 'no space left on device' error...).
+    # To find the location of the logfiles you can find the name of the container with `docker ps`, then use `inspect`
+    # `docker inspect [859f0ee6b925 - name of your container] | jq '.[0].LogPath'`
+    logging: # &logging --> use a yaml anchor if you need to repeat this.
+      driver: "json-file"
+      options:
+        # Rotate the files when they reach max-size.
+        max-size: "200k"
+        max-file: "10"
+
+    restart: always
     environment:
       # nginx-proxy stuff!
       - VIRTUAL_HOST=ldirer.com
+networks:
+  default:
+    external:
+      name: nginx-proxy
