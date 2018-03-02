@@ -1,0 +1,9 @@
+version: "3"
+services:
+  nginx:
+    image: ldirer.com/nginx-static
+    build:
+      dockerfile: nginx.dockerfile
+      context: ./deploy
+    environment:
+      - VIRTUAL_HOST=ldirer.com

@@ -252,3 +252,7 @@ defaults:
 webrick:
   headers:
     Access-Control-Allow-Origin: "*"
+
+
+### Build settings
+destination: deploy/_site  # default is _site, it's better for me to have it isolated to not bloat docker context.
