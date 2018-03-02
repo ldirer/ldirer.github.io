@@ -6,4 +6,5 @@ services:
       dockerfile: nginx.dockerfile
       context: ./deploy
     environment:
+      # nginx-proxy stuff!
       - VIRTUAL_HOST=ldirer.com
