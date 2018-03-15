@@ -257,7 +257,7 @@ Our image already had our code in `/app` because we copied it there at build tim
 The volume overwrites it and allows us to edit code on our machine and to have the changes reflected in the container.  
 
 At this point you might wonder why we copied the code into the image during the `build`.  
-This is because the volume is only for development purposes and we will want to use the same image for production.
+This is because the volume is only for development purposes and we will want to use the same dockerfile for production.
 
 # Adding a database
 
@@ -595,7 +595,7 @@ Otherwise you need to lookup the random-generated name that docker gave your con
     ```
     
     `-it` makes sure you get a terminal prompt so you can explore things. Otherwise docker just runs bash and exits.
-    (`--tty`: give me a prompt! ;`--interactive`: keep stdin attached so I can use that prompt!)
+    (`-it` is short for `--interactive --tty`: `--tty`: give me a prompt! ;`--interactive`: keep stdin attached so I can use that prompt!)
     
     
 <!--
@@ -612,9 +612,7 @@ Running a server on `localhost` within a container and trying to access it from 
 We have a development environment that runs completely inside docker. Great!
 This is already a big win if you are working with a team and you need a consistent development environment.
 
-Also note that you don't have to do all of this at once.   
-
-I would argue using docker-compose only for things like your database, `redis` or `rabbit-mq` is already a win, since it's faster and easier than installing them on your machine.  
+Also note that you don't have to do this all at once: an easy start could be to use docker-compose only for things like your database, `redis` or `rabbit-mq`.   
 <!-- If you have a complex app and want to start by using docker only for the database and the backend, that's already great.  -->
 On some projects I do not dockerize my frontend development server and just run it on my machine. 
 I feel there are less benefits to dockerizing the frontend than the backend, since we won't really reuse the frontend part for deployment.
@@ -629,6 +627,11 @@ The goal of the next tutorial will be to get a production setup that:
 * Can be deployed efficiently - in terms of both speed and developer input.
 * Includes logging, restart policies and other niceties.
 * Makes you feel good if you've ever struggled with a deployment process.
+
+
+[Take a look at the code for this post](https://github.com/ldirer/deploy-app-docker/tree/working-app-dev-setup) or 
+[read the next part](/deploy-docker-app-part-2)!
+
 
 
 <!-- That's why all packages installations are done in the dockerfile, so they are installed in the image during `docker build`. -->
