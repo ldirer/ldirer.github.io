@@ -2,6 +2,7 @@
 <html lang="{{ page.lang | default: site.lang | default: 'en' }}">
 
   {% include head.html %}
+  <link href="https://fonts.googleapis.com/css?family=Raleway&text=LAURENT%20DIRER%20About%20Previous%20Projects%Blog" rel="stylesheet">
   <link rel="stylesheet" href="/ld-default.css">
   <link rel="stylesheet" href="/ld-about.css">
   <link rel="stylesheet" href="/projects.css">
@@ -10,6 +11,7 @@
 
     <main class="ld-page" aria-label="Content">
 
+      <!--Note I'm using google fonts beta feature to load only the letters I need, so updating a header means I should update the google fonts query param `text` -->
       <div class="ld-header-me">LAURENT DIRER</div>
       <div class="ld-navbar">
         <a href="/">About</a>
