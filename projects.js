@@ -3,7 +3,7 @@ function techno_to_logo(technologyName) {
   technologyName = custom_techno_to_logo[technologyName] || technologyName
 
 
-  let extension = (new Set(['angular2', 'js', 'rabbitmq'])).has(technologyName) ? 'jpg' : 'png'
+  let extension = (new Set(['angular2', 'js', 'rabbitmq', 'pytorch'])).has(technologyName) ? 'jpg' : 'png'
   return `${technologyName}.${extension}`
 }
 
@@ -27,7 +27,7 @@ function renderProject(p) {
   <space style="flex: 1 0 auto"></space>
   
   <div class="ld-company-header">
-    <div> 
+    <div style="width: 200px; text-align: center"> 
       <img src="${p.logo}" style="max-width: 200px" /> 
       <!--width="200px"/>-->
     </div>
@@ -58,6 +58,21 @@ function renderProject(p) {
 
 let store = {
   projects: [
+    {
+      company: "Recurse Center",
+      logo: "/assets/ld/rc.png",
+      website: "https://recurse.com",
+      body: `I spent 3 months at the recurse center, a self-directed retreat to become a better programmer.
+      <ul>
+      <li>Published my <a href="deploy-docker-app/">first blog post</a></li>
+      <li>Worked on writing a LLVM frontend for C in Python (<a href="https://github.com/ldirer/compyler">github</a>)</li>
+      <li>Wrote a shakespeare bot (text generation) using deep learning, took the fastai classes, took (half) an OS course...</li>
+      <li>Most importantly I met and worked with amazing people and programmers.</li>
+    </ul>
+      
+      `,
+      technologies: ["python", "flask", "javascript", "vuejs", "docker", "postgresql", "pytorch"]
+    },
 
     {
       company: "Personal project",
@@ -76,9 +91,10 @@ let store = {
     body: `
 I helped build the startup's first product, a live game display of football players positions on the pitch.
 <ul>
-<li>set up coding practices: add tests, continuous integration, systematic code reviews.</li>
-<li>made the video processing steps run in parallel to improve fps throughput.</li>
-<li>migrate the app from angular2 beta to stable version, move from gulp to angular-cli.</li>
+<li>Set up coding practices: add tests, continuous integration, systematic code reviews.</li>
+<li>Made the video processing steps run in parallel to improve fps throughput.</li>
+<li>Took over web development, migrating the app from angular2 beta to stable version, from gulp to angular-cli.</li>
+<li>Set up automatic provisioning and deployment to several machines (on-demand, need to launch new machines to process a game).</li>
 </ul>`,
     technologies: ["python", "django", "celery", "rabbitmq",
       "redis", "docker", "ansible", "javascript", "angular2", "postgresql", "grafana", "graphite", "statsd"]
