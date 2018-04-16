@@ -1,7 +1,7 @@
 ---
 layout: mysingle
 title: "Deploy your app with docker and docker-compose - Annex"
-permalink: /deploy-docker-app/annex-docker
+permalink: /deploy-docker-app/annex-docker/
 is_annex: true
 ---
 

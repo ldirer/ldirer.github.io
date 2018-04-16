@@ -19,6 +19,8 @@ services:
     environment:
       # nginx-proxy stuff!
       - VIRTUAL_HOST=ldirer.com
+      - LETSENCRYPT_HOST= ldirer.com
+      - LETSENCRYPT_EMAIL= laurent.direr@gmail.com
 networks:
   default:
     external:
