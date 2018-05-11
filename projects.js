@@ -64,7 +64,7 @@ let store = {
       website: "https://recurse.com",
       body: `I spent 3 months at the recurse center, a self-directed retreat to become a better programmer.
       <ul>
-      <li>Published my <a href="deploy-docker-app/">first blog post</a></li>
+      <li>Published my <a href="/deploy-docker-app/">first blog post</a></li>
       <li>Worked on writing a LLVM frontend for C in Python (<a href="https://github.com/ldirer/compyler">github</a>)</li>
       <li>Wrote a shakespeare bot (text generation) using deep learning, took the fastai classes, took (half) an OS course...</li>
       <li>Most importantly I met and worked with amazing people and programmers.</li>
