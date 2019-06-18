@@ -4,7 +4,7 @@
 }
 
 .ld-header-me {
-    font-family: 'Raleway', sans-serif;
+    font-family: Helvetica, 'Raleway', sans-serif;
     font-size: 40px;
     color: dimgrey;
     text-align: center;
@@ -18,7 +18,7 @@
 
 .ld-navbar a {
     color: #5f6e7d;
-    font-family: 'Raleway', sans-serif;
+    font-family: Helvetica, 'Raleway', sans-serif;
     text-decoration: none;  /* dont underline links */
     text-transform: uppercase;
     font-size: smaller;

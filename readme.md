@@ -9,5 +9,5 @@
 2. `eval $(docker-machine env aws-ldirer.com)`
 3. `docker-compose build`
 4. `docker-compose -f docker-compose.yml up -d`  
-Explicitely pass the config file with `-f` so that `.override` is not loaded.
+Explicitly pass the config file with `-f` so that `.override` is not loaded.
 

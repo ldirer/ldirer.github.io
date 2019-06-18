@@ -12,7 +12,8 @@ def title_to_link(title: str):
 
 
 def read_headers(fname: str):
-    """Read headers from a mardown file. We don't have to insert links to get anchor tags, there's a default string that works (with Jekyll output at least)."""
+    """Read headers from a mardown file. We don't have to insert links to get anchor tags,
+    there's a default string that works (with Jekyll output at least)."""
     in_code_block = False
     with open(fname, 'r') as f:
         # headers: ['# Title 1', '## Subtitle', '# Title 2'] 
@@ -47,7 +48,6 @@ def get_index(headers):
         level_to_count[level] += 1
 
     return '\n'.join(lines)
-
 
 
 def test_title_to_link():
