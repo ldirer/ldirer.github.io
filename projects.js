@@ -95,7 +95,9 @@ I helped build the startup's first product, a live game display of football play
 <li>Made the video processing steps run in parallel to improve fps throughput.</li>
 <li>Took over web development, migrating the app from angular2 beta to stable version, from gulp to angular-cli.</li>
 <li>Set up automatic provisioning and deployment to several machines (on-demand, need to launch new machines to process a game).</li>
-</ul>`,
+</ul>
+Skillcorner (successfully) went live on a leading French bookmaker website for the 2018 World Cup.
+`,
     technologies: ["python", "django", "celery", "rabbitmq",
       "redis", "docker", "ansible", "javascript", "angular2", "postgresql", "grafana", "graphite", "statsd"]
   },
