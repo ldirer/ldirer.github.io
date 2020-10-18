@@ -59,6 +59,24 @@ function renderProject(p) {
 let store = {
   projects: [
     {
+      company: "Trax (affiliate of Free/Iliad)",
+      logo: "/assets/ld/oqee_logo_padded.png",
+      website: "https://oqee.tv/",
+      body:`
+      OqeeTV is a new way to experience television.  
+      
+As the main TV interface of the "freebox pop", it lets you watch VOD, replays, recorded programs (NPVR) and live TV all in one application.<br>
+I joined a team of 3 just as they got started, over the next few months it grew to 15 people to handle the (many!) aspects of building the app.<br>
+I was one of 2 people working on the backend.
+<ul>
+<li>Building a backoffice tool (from scratch, backend and frontend) to provide a user-friendly view of the database and allow performing operational tasks. The tool was for instance used by the team working on visuals for the programs to upload pictures of various formats.</li>
+<li>Integrating data from various providers (catalog of movies with associated offers as VOD/replay), adding them to the database in a way that lets us identify a movie across providers.</li>
+<li>Building the API used by the different OqeeTV applications. The focus was on performance (planning to handle hundreds of thousands of people accessing the application at the same time) and maintainability of the API together with the different clients using it (android applications, web clients, etc).</li>
+</ul>
+`,
+      technologies: ["python", "django", "javascript", "postgresql"]
+    },
+    {
       company: "Recurse Center",
       logo: "/assets/ld/rc.png",
       website: "https://recurse.com",
@@ -81,6 +99,7 @@ let store = {
       body: `A single-page app to aggregate feeds from facebook pages and groups.
       Feel free to try it out!
       <div>Deployed on aws.</div>
+      <div><i>This project does not work anymore, I did not use it anymore and did not keep it up to date after Facebook api changes regarding privacy.</i></div>  
       `,
       technologies: ["python", "flask", "javascript", "vuejs", "bulma", "celery", "docker", "postgresql"]
     },
